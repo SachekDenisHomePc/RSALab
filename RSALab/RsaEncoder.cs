@@ -15,13 +15,9 @@ namespace RSALab
 
             int e = 0;
 
-            for (int i = 1; i < euler && e == 0; i++)
-            {
-                if (IsCoprime(i, euler) && IsPrimeNumber(i))
-                    e = i;
-            }
+            int d = 11;
 
-            int d = FindInverseElement(e, euler);
+            e = FindInverseElement(d, euler);
 
             return new Keys
             {
@@ -34,6 +30,8 @@ namespace RSALab
 
         public string Encode(string inputText, Keys key)
         {
+            var listChars = ConvertTextToNumbers(inputText).ToList();
+            listChars.ForEach(el=> Console.Write(el+" "));
             var encryptedText = new string(ConvertTextToNumbers(inputText).Select(symbol => (char)FastPowFunc(symbol, key.EOpenKey, key.NOpenKey)).ToArray());
             return encryptedText;
         }
